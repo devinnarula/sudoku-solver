@@ -1,5 +1,4 @@
-import random
-from functions import find_next, is_cell_valid, print_grid, fill_grid
+from functions import find_next, is_cell_valid, print_grid
 
 def solve(grid):
     next_cell = find_next(grid)
@@ -19,18 +18,6 @@ def solve(grid):
     return False
 
 
-def solve_random(grid):
-    original = grid
-    count = fill_grid(grid)
-    while(count != 0):
-        for row in range(0, len(grid)):
-            for col in range(0, len(grid[0])):
-                if (not is_cell_valid((row, col), grid[row][col], grid)) and original[row][col] == 0:
-                    count += 1
-                    grid[row][col] = random.randint(1, 9)
-
-
-
 grid = [
     [0, 0, 0, 0, 0, 0, 6, 8, 0],
     [0, 0, 0, 0, 7, 3, 0, 0, 9],
@@ -44,23 +31,7 @@ grid = [
 ]
 print_grid(grid)
 print("-------------------------------------")
-print("Backtracing Method:")
 if solve(grid):
     print_grid(grid)
 else:
     print("Invalid puzzle")
-print("-------------------------------------")
-print("Random Method:")
-grid = [
-    [0, 0, 0, 0, 0, 0, 6, 8, 0],
-    [0, 0, 0, 0, 7, 3, 0, 0, 9],
-    [3, 0, 9, 0, 0, 0, 0, 4, 5],
-    [4, 9, 0, 0, 0, 0, 0, 0, 0],
-    [8, 0, 3, 0, 5, 0, 9, 0, 2],
-    [0, 0, 0, 0, 0, 0, 0, 3, 6],
-    [9, 6, 0, 0, 0, 0, 3, 0, 8],
-    [7, 0, 0, 6, 8, 0, 0, 0, 0],
-    [0, 2, 8, 0, 0, 0, 0, 0, 0]
-]
-solve_random(grid)
-print_grid(grid)

@@ -8,16 +8,6 @@ def find_next(grid):
     return None
 
 
-def fill_grid(grid):
-    count = 0
-    for row in range(0,len(grid)):
-        for col in range (0, len(grid[0])):
-            if grid[row][col] == 0:
-                grid[row][col] = random.randint(1, 9)
-                count += 1
-    return count
-
-
 def is_cell_valid(cell, num, grid):
     return check_row(cell, num, grid) and check_col(cell, num, grid) and check_box(cell, num, grid)
 
