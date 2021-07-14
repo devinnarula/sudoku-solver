@@ -1,26 +1,9 @@
 import tkinter as tk
-import time
-from functions import find_next, is_cell_valid, print_grid
+from backtracing import solve
 
-def solve():
-    next_cell = find_next(grid)
-
+def update_gui(next_cell, num):
+    my_cells[next_cell[0]][next_cell[1]].set(num)
     window.update()
-
-    if not next_cell:
-        return True
-
-    for num in range(1, len(grid) + 1):
-        if is_cell_valid(next_cell, num, grid):
-            grid[next_cell[0]][next_cell[1]] = num
-            myCells[next_cell[0]][next_cell[1]].set(grid[next_cell[0]][next_cell[1]])
-            if solve():
-                return True
-
-        grid[next_cell[0]][next_cell[1]] = 0
-
-    return False
-
 
 grid = [
     [0, 0, 0, 0, 0, 0, 6, 8, 0],
@@ -33,13 +16,10 @@ grid = [
     [7, 0, 0, 6, 8, 0, 0, 0, 0],
     [0, 2, 8, 0, 0, 0, 0, 0, 0]
 ]
-print_grid(grid)
-print("-------------------------------------")
-
 
 window = tk.Tk()
 
-myCells = [];
+my_cells = [];
 
 for row in range(0, len(grid)):
     for col in range(0, len(grid[0])):
@@ -52,16 +32,16 @@ for row in range(0, len(grid)):
         )
         frame.grid(row=row, column=col)
         if col == 0:
-            myCells.append([])
-        myCells[row].append(tk.IntVar())
-        myCells[row][col].set(grid[row][col])
-        entry = tk.Label(master=frame, textvariable=myCells[row][col])
+            my_cells.append([])
+        my_cells[row].append(tk.IntVar())
+        my_cells[row][col].set(grid[row][col])
+        entry = tk.Label(master=frame, textvariable=my_cells[row][col])
         entry.pack()
 
-if not solve():
+if not solve(grid, update_gui):
     for row in range(0, len(grid)):
         for col in range(0, len(grid[0])):
-            myCells[row][col].set(grid[row][col])
+            my_cells[row][col].set(grid[row][col])
             window.update()
 else:
     print("Invalid puzzle")
