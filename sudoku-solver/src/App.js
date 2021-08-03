@@ -1,9 +1,8 @@
 import './App.css'
+import Solver from './pages/Solver/solver';
 function App() {
   return (
-    <div>
-      YO
-    </div>
+    <Solver />
   );
 }
 
