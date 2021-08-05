@@ -33,12 +33,16 @@ class Solver extends React.Component {
             if(response.ok){
                 return response.json()
             }
-        }).then(data => this.setState({grid: data.grid, time: data.time}))
+        }).then(data => {
+            this.setState({grid: data.grid, time: data.time})
+            if (!data.valid) {
+                alert("Invalid Sudoku Board (Cannot be solved because board is illegal)")
+            }
+        })
     }
 
     handleCellChange = (r,c) => (e) => {
         var newgrid = this.state.grid;
-        console.log(newgrid)
         if(e.target.value)
             newgrid[r][c] = parseInt(e.target.value)
         else

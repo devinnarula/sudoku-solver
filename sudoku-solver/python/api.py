@@ -27,9 +27,12 @@ CORS(app)
 def solve():
     grid = request.json.get('grid')
     start = time.time()
-    backtracing.solve(grid)
-    total_time = time.time() - start
-    return jsonify(grid=grid, time=total_time)
+    if backtracing.solve(grid):
+        total_time = time.time() - start
+        return jsonify(grid=grid, time=total_time, valid=True)
+    else:
+        total_time = time.time() - start
+        return jsonify(grid=grid, time=total_time, valid=False)
 
 if __name__ == '__main__':
     app.run(debug=True)
