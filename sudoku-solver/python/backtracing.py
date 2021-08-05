@@ -9,7 +9,6 @@ def solve(grid):
     for num in range(1, len(grid) + 1):
         if is_cell_valid(next_cell, num, grid):
             grid[next_cell[0]][next_cell[1]] = num
-            # update_gui(next_cell, num)
             if solve(grid):
                 return True
 

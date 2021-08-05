@@ -1,10 +1,11 @@
 import React from 'react'
-import { SolverContainer, Title, Grid, Cell, SolveBtn } from './SolverElements'
+import { SolverContainer, Title, Grid, Cell, SolveBtn, SolverMiddle, SolverButtons, ClearBtn, TimeLabel, Time, TimeContainer } from './SolverElements'
 
 class Solver extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {grid: [
+        this.state = {
+            grid: [
             [0, 0, 0, 0, 0, 0, 6, 8, 0],
             [0, 0, 0, 0, 7, 3, 0, 0, 9],
             [3, 0, 9, 0, 0, 0, 0, 4, 5],
@@ -14,7 +15,9 @@ class Solver extends React.Component {
             [9, 6, 0, 0, 0, 0, 3, 0, 8],
             [7, 0, 0, 6, 8, 0, 0, 0, 0],
             [0, 2, 8, 0, 0, 0, 0, 0, 0]
-        ]};
+            ],
+            time: 0
+        };
         this.handleCellChange = this.handleCellChange.bind(this);
       }
     
@@ -30,7 +33,7 @@ class Solver extends React.Component {
             if(response.ok){
                 return response.json()
             }
-        }).then(data => this.setState({grid: data}))
+        }).then(data => this.setState({grid: data.grid, time: data.time}))
     }
 
     handleCellChange = (r,c) => (e) => {
@@ -43,18 +46,64 @@ class Solver extends React.Component {
         this.setState({grid: newgrid})
     }
 
+    handleClear = () => {
+        this.setState({
+            grid: [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0]
+            ],
+            time: 0
+        })
+    }
+
+    handleReset = () => {
+        this.setState({
+            grid: [
+            [0, 0, 0, 0, 0, 0, 6, 8, 0],
+            [0, 0, 0, 0, 7, 3, 0, 0, 9],
+            [3, 0, 9, 0, 0, 0, 0, 4, 5],
+            [4, 9, 0, 0, 0, 0, 0, 0, 0],
+            [8, 0, 3, 0, 5, 0, 9, 0, 2],
+            [0, 0, 0, 0, 0, 0, 0, 3, 6],
+            [9, 6, 0, 0, 0, 0, 3, 0, 8],
+            [7, 0, 0, 6, 8, 0, 0, 0, 0],
+            [0, 2, 8, 0, 0, 0, 0, 0, 0]
+            ],
+            time: 0
+        })
+    }
+
     render() {
         return (
             <SolverContainer>
                 <Title>Sudoku Solver</Title>
-                <Grid>
-                    {this.state.grid.map((row, r) => (
-                        row.map((num, c) => (
-                            <Cell id={`${(r*this.state.grid.length)+c}`} type="text" value={this.state.grid[r][c].toString()} key={(r*this.state.grid.length)+c} onChange={this.handleCellChange(r,c)}/>
-                        ))
-                    ))}
-                </Grid>
-                <SolveBtn onClick={this.solve}>Solve</SolveBtn>
+                <SolverMiddle>
+                    <SolverButtons>
+                        <ClearBtn onClick={this.handleClear}>Clear Board</ClearBtn>
+                        <ClearBtn onClick={this.handleReset}>Reset Board</ClearBtn>
+                    </SolverButtons>
+                    <Grid>
+                        {this.state.grid.map((row, r) => (
+                            row.map((num, c) => (
+                                <Cell id={`${(r*this.state.grid.length)+c}`} type="text" value={this.state.grid[r][c]!==0 ? this.state.grid[r][c].toString() : ""} key={(r*this.state.grid.length)+c} onChange={this.handleCellChange(r,c)}/>
+                            ))
+                        ))}
+                    </Grid>
+                    <SolverButtons>
+                    <ClearBtn onClick={this.solve}>Solve</ClearBtn>
+                    <TimeContainer>
+                        <TimeLabel>Solve Time:</TimeLabel>
+                        <Time>{this.state.time !== 0 ? this.state.time : "--"} seconds</Time>
+                    </TimeContainer>
+                    </SolverButtons>
+                </SolverMiddle>
             </SolverContainer>
         )
     }

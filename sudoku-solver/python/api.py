@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, json
 from flask_cors import CORS
 import backtracing
+import time
 
 app = Flask(__name__, static_folder='../build', static_url_path='/')
 CORS(app)
@@ -25,8 +26,10 @@ CORS(app)
 @app.route('/solve', methods=['POST'])
 def solve():
     grid = request.json.get('grid')
+    start = time.time()
     backtracing.solve(grid)
-    return jsonify(grid)
+    total_time = time.time() - start
+    return jsonify(grid=grid, time=total_time)
 
 if __name__ == '__main__':
     app.run(debug=True)
