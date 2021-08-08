@@ -86,3 +86,9 @@ export const Time = styled.h1`
     font-size: 25px;
     color: #ccc;
 `;
+
+export const LoadingImg = styled.img`
+    width: ${({display}) => display ? '200px' : '0px'};
+    margin: 125px;
+    position: absolute;
+`;
