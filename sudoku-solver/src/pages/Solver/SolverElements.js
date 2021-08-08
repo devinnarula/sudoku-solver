@@ -18,10 +18,18 @@ export const Title = styled.h1`
     margin-top: 30px;
 `;
 
+export const SolverInfo = styled.p`
+    margin-top: 50px;
+    color: white;
+    font-size: 20px;
+    width: 600px;
+`;
+
 export const SolverMiddle = styled.div`
     margin-top: 50px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 `;
 
 export const SolverButtons = styled.div`
@@ -41,16 +49,17 @@ export const Cell = styled.input`
     height: 50px;
     text-align: center;
     font-size: 25px;
+    border-left: ${({col}) => col%3===0 ? '4px solid black' : '1px solid #333'};
+    border-top: ${({row}) => row%3===0 ? '4px solid black' : '1px solid #333'};
+    border-bottom: ${({row}) => row===8 ? '4px solid black' : '1px solid #333'};
+    border-right: ${({col}) => col===8 ? '4px solid black' : '1px solid #333'};
+
+    &:focus {
+        outline: 0;
+    }
 `;
 
 export const SolveBtn = styled.button`
-    width: 200px;
-    height: 100px;
-    text-align: center;
-    font-size: 30px;
-`;
-
-export const ClearBtn = styled.button`
     width: 150px;
     height: 75px;
     text-align: center;

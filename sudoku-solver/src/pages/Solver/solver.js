@@ -1,5 +1,5 @@
 import React from 'react'
-import { SolverContainer, Title, Grid, Cell, SolveBtn, SolverMiddle, SolverButtons, ClearBtn, TimeLabel, Time, TimeContainer } from './SolverElements'
+import { SolverContainer, SolverInfo, Title, Grid, Cell, SolverMiddle, SolverButtons, SolveBtn, TimeLabel, Time, TimeContainer } from './SolverElements'
 
 class Solver extends React.Component {
     constructor(props) {
@@ -88,20 +88,23 @@ class Solver extends React.Component {
         return (
             <SolverContainer>
                 <Title>Sudoku Solver</Title>
+                <SolverInfo>
+                    Welcome to the sudoku solver! Fill out the board however you would like and then press solve to find the solution. If you want to clear the board press clear. And press reset to get a default sudoku game!
+                </SolverInfo>
                 <SolverMiddle>
                     <SolverButtons>
-                        <ClearBtn onClick={this.handleClear}>Clear Board</ClearBtn>
-                        <ClearBtn onClick={this.handleReset}>Reset Board</ClearBtn>
+                        <SolveBtn onClick={this.handleClear}>Clear Board</SolveBtn>
+                        <SolveBtn onClick={this.handleReset}>Reset Board</SolveBtn>
                     </SolverButtons>
                     <Grid>
                         {this.state.grid.map((row, r) => (
                             row.map((num, c) => (
-                                <Cell id={`${(r*this.state.grid.length)+c}`} type="text" value={this.state.grid[r][c]!==0 ? this.state.grid[r][c].toString() : ""} key={(r*this.state.grid.length)+c} onChange={this.handleCellChange(r,c)}/>
+                                <Cell id={`${(r*this.state.grid.length)+c}`} type="number" min='0' max='9' value={this.state.grid[r][c]!==0 ? this.state.grid[r][c].toString() : ""} key={(r*this.state.grid.length)+c} onChange={this.handleCellChange(r,c)} row={r} col={c}/>
                             ))
                         ))}
                     </Grid>
                     <SolverButtons>
-                    <ClearBtn onClick={this.solve}>Solve</ClearBtn>
+                    <SolveBtn onClick={this.solve}>Solve</SolveBtn>
                     <TimeContainer>
                         <TimeLabel>Solve Time:</TimeLabel>
                         <Time>{this.state.time !== 0 ? this.state.time : "--"} seconds</Time>
