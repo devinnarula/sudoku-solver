@@ -27,7 +27,7 @@ class Solver extends React.Component {
         this.setState({
             solving: true
         })
-        fetch(`http://127.0.0.1:5000/solve`, {
+        fetch(`https://sudoku-solver-python-api.herokuapp.com/solve`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
